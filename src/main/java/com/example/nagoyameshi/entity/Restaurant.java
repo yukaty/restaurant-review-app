@@ -15,10 +15,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name = "restaurants")
 @Data
+@ToString(exclude = {"categoriesRestaurants", "regularHolidaysRestaurants"})
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,4 +66,8 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @OrderBy("id ASC")
     private List<CategoryRestaurant> categoriesRestaurants; 
+    
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("regularHoliday.id ASC")
+    private List<RegularHolidayRestaurant> regularHolidaysRestaurants;  
 }
