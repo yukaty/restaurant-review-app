@@ -12,10 +12,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name = "categories")
 @Data
+@ToString(exclude = "categoriesRestaurants") // 循環参照によるStackOverflowエラー対策
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
