@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,6 +34,9 @@ public class AdminRestaurantControllerTest {
 
     @Autowired
     private RestaurantService restaurantService;
+
+    @TempDir
+    Path tempDir;  // JUnitがテスト時に自動で一時ディレクトリを作成
 
     @Test
     public void 未ログインの場合は管理者用の店舗一覧ページからログインページにリダイレクトする() throws Exception {
@@ -107,7 +111,7 @@ public class AdminRestaurantControllerTest {
         long countBefore = restaurantService.countRestaurants();
 
         // テスト用の画像ファイルデータを準備する
-        Path filePath = Paths.get("src/main/resources/static/images/no_image.jpg");
+        Path filePath = Files.copy(Paths.get("src/main/resources/static/images/no_image.jpg"), tempDir.resolve("no_image.jpg"));
         String fileName = filePath.getFileName().toString();
         String fileType = Files.probeContentType(filePath);
         byte[] fileBytes = Files.readAllBytes(filePath);
@@ -148,7 +152,7 @@ public class AdminRestaurantControllerTest {
         long countBefore = restaurantService.countRestaurants();
 
         // テスト用の画像ファイルデータを準備する
-        Path filePath = Paths.get("src/main/resources/static/images/no_image.jpg");
+        Path filePath = Files.copy(Paths.get("src/main/resources/static/images/no_image.jpg"), tempDir.resolve("no_image.jpg"));
         String fileName = filePath.getFileName().toString();
         String fileType = Files.probeContentType(filePath);
         byte[] fileBytes = Files.readAllBytes(filePath);
@@ -188,7 +192,7 @@ public class AdminRestaurantControllerTest {
         long countBefore = restaurantService.countRestaurants();
 
         // テスト用の画像ファイルデータを準備する
-        Path filePath = Paths.get("src/main/resources/static/images/no_image.jpg");
+        Path filePath = Files.copy(Paths.get("src/main/resources/static/images/no_image.jpg"), tempDir.resolve("no_image.jpg"));
         String fileName = filePath.getFileName().toString();
         String fileType = Files.probeContentType(filePath);
         byte[] fileBytes = Files.readAllBytes(filePath);
@@ -258,7 +262,7 @@ public class AdminRestaurantControllerTest {
     @Transactional
     public void 未ログインの場合は店舗を更新せずにログインページにリダイレクトする() throws Exception {
         // テスト用の画像ファイルデータを準備する
-        Path filePath = Paths.get("src/main/resources/static/images/no_image.jpg");
+        Path filePath = Files.copy(Paths.get("src/main/resources/static/images/no_image.jpg"), tempDir.resolve("no_image.jpg"));
         String fileName = filePath.getFileName().toString();
         String fileType = Files.probeContentType(filePath);
         byte[] fileBytes = Files.readAllBytes(filePath);
@@ -303,7 +307,7 @@ public class AdminRestaurantControllerTest {
     @Transactional
     public void 一般ユーザーとしてログイン済みの場合は店舗を更新せずに403エラーが発生する() throws Exception {
         // テスト用の画像ファイルデータを準備する
-        Path filePath = Paths.get("src/main/resources/static/images/no_image.jpg");
+        Path filePath = Files.copy(Paths.get("src/main/resources/static/images/no_image.jpg"), tempDir.resolve("no_image.jpg"));
         String fileName = filePath.getFileName().toString();
         String fileType = Files.probeContentType(filePath);
         byte[] fileBytes = Files.readAllBytes(filePath);
@@ -347,7 +351,7 @@ public class AdminRestaurantControllerTest {
     @Transactional
     public void 管理者としてログイン済みの場合は店舗更新後に店舗一覧ページにリダイレクトする() throws Exception {
         // テスト用の画像ファイルデータを準備する
-        Path filePath = Paths.get("src/main/resources/static/images/no_image.jpg");
+        Path filePath = Files.copy(Paths.get("src/main/resources/static/images/no_image.jpg"), tempDir.resolve("no_image.jpg"));
         String fileName = filePath.getFileName().toString();
         String fileType = Files.probeContentType(filePath);
         byte[] fileBytes = Files.readAllBytes(filePath);
