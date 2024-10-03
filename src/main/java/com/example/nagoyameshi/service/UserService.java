@@ -133,7 +133,12 @@ public class UserService {
     public Optional<User> findUserById(Integer id) {
         return userRepository.findById(id);
     }
-
+    
+    // 指定したロール名に紐づくユーザーのレコード数を取得する
+    public long countUsersByRole_Name(String roleName) {
+        return userRepository.countByRole_Name(roleName);
+    }
+    
     @Transactional
     public void saveStripeCustomerId(User user, String stripeCustomerId) {
         user.setStripeCustomerId(stripeCustomerId);
