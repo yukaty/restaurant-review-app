@@ -45,7 +45,9 @@ public class RestaurantController {
             if (order != null && order.equals("lowestPriceAsc")) {
                 restaurantPage = restaurantService.findRestaurantsByNameLikeOrAddressLikeOrCategoryNameLikeOrderByLowestPriceAsc(keyword, keyword, keyword, pageable);
             } else if (order != null && order.equals("ratingDesc")) {
-                restaurantPage = restaurantService.findRestaurantsByNameLikeOrAddressLikeOrCategoryNameLikeOrderByAverageScoreDesc(keyword, keyword, keyword, pageable);                
+                restaurantPage = restaurantService.findRestaurantsByNameLikeOrAddressLikeOrCategoryNameLikeOrderByAverageScoreDesc(keyword, keyword, keyword, pageable);
+            } else if (order != null && order.equals("popularDesc")) {
+                restaurantPage = restaurantService.findRestaurantsByNameLikeOrAddressLikeOrCategoryNameLikeOrderByReservationCountDesc(keyword, keyword, keyword, pageable);                
             } else {
                 restaurantPage = restaurantService.findRestaurantsByNameLikeOrAddressLikeOrCategoryNameLikeOrderByCreatedAtDesc(keyword, keyword, keyword, pageable);
             }
@@ -53,7 +55,9 @@ public class RestaurantController {
             if (order != null && order.equals("lowestPriceAsc")) {
                 restaurantPage = restaurantService.findRestaurantsByCategoryIdOrderByLowestPriceAsc(categoryId, pageable);
             } else if (order != null && order.equals("ratingDesc")) {
-                restaurantPage = restaurantService.findRestaurantsByCategoryIdOrderByAverageScoreDesc(categoryId, pageable);                
+                restaurantPage = restaurantService.findRestaurantsByCategoryIdOrderByAverageScoreDesc(categoryId, pageable);
+            } else if (order != null && order.equals("popularDesc")) {
+                restaurantPage = restaurantService.findRestaurantsByCategoryIdOrderByReservationCountDesc(categoryId, pageable);                
             } else {
                 restaurantPage = restaurantService.findRestaurantsByCategoryIdOrderByCreatedAtDesc(categoryId, pageable);
             }
@@ -61,7 +65,9 @@ public class RestaurantController {
             if (order != null && order.equals("lowestPriceAsc")) {
                 restaurantPage = restaurantService.findRestaurantsByLowestPriceLessThanEqualOrderByLowestPriceAsc(price, pageable);
             } else if (order != null && order.equals("ratingDesc")) {
-                restaurantPage = restaurantService.findRestaurantsByLowestPriceLessThanEqualOrderByAverageScoreDesc(price, pageable);                
+                restaurantPage = restaurantService.findRestaurantsByLowestPriceLessThanEqualOrderByAverageScoreDesc(price, pageable);
+            } else if (order != null && order.equals("popularDesc")) {
+                restaurantPage = restaurantService.findRestaurantsByLowestPriceLessThanEqualOrderByReservationCountDesc(price, pageable);                
             } else {
                 restaurantPage = restaurantService.findRestaurantsByLowestPriceLessThanEqualOrderByCreatedAtDesc(price, pageable);
             }
@@ -69,7 +75,9 @@ public class RestaurantController {
             if (order != null && order.equals("lowestPriceAsc")) {
                 restaurantPage = restaurantService.findAllRestaurantsByOrderByLowestPriceAsc(pageable);
             } else if (order != null && order.equals("ratingDesc")) {
-                restaurantPage = restaurantService.findAllRestaurantsByOrderByAverageScoreDesc(pageable);                
+                restaurantPage = restaurantService.findAllRestaurantsByOrderByAverageScoreDesc(pageable);
+            } else if (order != null && order.equals("popularDesc")) {
+                restaurantPage = restaurantService.findAllRestaurantsByOrderByReservationCountDesc(pageable);                
             } else {
                 restaurantPage = restaurantService.findAllRestaurantsByOrderByCreatedAtDesc(pageable);
             }
@@ -85,7 +93,7 @@ public class RestaurantController {
 
         return "restaurants/index";
     }
-    
+
     @GetMapping("/{id}")
     public String show(@PathVariable(name = "id") Integer id,
                        RedirectAttributes redirectAttributes,
